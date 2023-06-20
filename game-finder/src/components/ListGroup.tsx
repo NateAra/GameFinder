@@ -4,7 +4,7 @@ const ListGroup = () => {
   return (
     <>
       <h1>List</h1>
-      {cities.length === 0 && <p>shit man</p>}
+      {cities.length === 0 && <p>List not found</p>}
       <ul className="list-group">
         {cities.map((item, index) => (
           <li
