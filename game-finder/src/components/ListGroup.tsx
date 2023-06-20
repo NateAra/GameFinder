@@ -1,13 +1,23 @@
 const ListGroup = () => {
-    return (
-        <ul className="list-group">
-            <li className="list-group-item">An item</li>
-            <li className="list-group-item">A second item</li>
-            <li className="list-group-item">A third item</li>
-            <li className="list-group-item">A fourth item</li>
-            <li className="list-group-item">And a fifth one</li>
-        </ul>
-    );
-}
+  let cities = ["Trondheim", "Oslo", "Asmera", "Tokyo", "London"];
+
+  return (
+    <>
+      <h1>List</h1>
+      {cities.length === 0 && <p>shit man</p>}
+      <ul className="list-group">
+        {cities.map((item, index) => (
+          <li
+            className="list-group-item"
+            key={item}
+            onClick={() => console.log(item, index)}
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+};
 
 export default ListGroup;
