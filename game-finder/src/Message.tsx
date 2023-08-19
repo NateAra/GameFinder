@@ -8,7 +8,7 @@ const Message = () => {
     }
 
     return (
-        <h1>Am Back!</h1>
+        <h1>Am Back</h1>
     )
 }
 
