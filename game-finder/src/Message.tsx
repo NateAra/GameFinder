@@ -3,7 +3,7 @@ const Message = () => {
     const name = 'Johny';
     if (name) {
         return (
-            <h1>Morning {name}!</h1>
+            <h1>Morning! {name}!</h1>
         )
     }
 
