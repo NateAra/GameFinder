@@ -4,7 +4,7 @@ const App = () => {
 
   return (
     <div>
-      <Button handleClick={() => console.log('Clicked')}>
+      <Button color="info" handleClick={() => console.log('Clicked')}>
         My Button
       </Button>
     </div>

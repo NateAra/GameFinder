@@ -1,7 +1,7 @@
 
 interface ButtonProp {
     children: string;
-    color?: string;
+    color?: 'primary' | 'secondary' | 'danger' | 'info';
     handleClick: () => void;
 }
 
