@@ -3,14 +3,11 @@ import { useState } from "react";
 const ListGroup = () => {
   let cities = ["Trondheim", "Oslo", "Asmera"];
 
-  const [selectedIndex, setSelectedIndex] = useState(-1)
-
-  
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const getMessage = () => {
     return cities.length === 0 && <p>List not found</p>;
   };
-
 
   return (
     <>
@@ -19,9 +16,15 @@ const ListGroup = () => {
       <ul className="list-group">
         {cities.map((item, index) => (
           <li
-            className={selectedIndex === index ? "list-group-item active" : "list-group-item"}
+            className={
+              selectedIndex === index
+                ? "list-group-item active"
+                : "list-group-item"
+            }
             key={item}
-            onClick={() => {setSelectedIndex(index);}}
+            onClick={() => {
+              setSelectedIndex(index);
+            }}
           >
             {item}
           </li>

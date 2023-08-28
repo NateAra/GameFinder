@@ -4,7 +4,7 @@ import ListGroup from "./components/ListGroup";
 const App = () => {
   return (
     <div>
-      <Message/>
+      <Message />
       <ListGroup />
     </div>
   );
