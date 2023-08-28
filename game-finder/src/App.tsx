@@ -1,11 +1,11 @@
-import Message from "./Message";
 import ListGroup from "./components/ListGroup";
 
 const App = () => {
+  let items = ["Trondheim", "Oslo", "Asmera"];
+
   return (
     <div>
-      <Message />
-      <ListGroup />
+      <ListGroup items={items} heading="Cities"/>
     </div>
   );
 };
