@@ -1,23 +1,12 @@
-import { Alert } from "./components/Alert";
-import ListGroup from "./components/ListGroup";
+import { Button } from "./components/Button";
 
-const App = () => {
-  let items = ["Trondheim", "Oslo", "Asmera", "Tokyo"];
-
-  const handelSelectItem = (items: string) => {
-    console.log(items);
-  };
+const App = () => { 
 
   return (
     <div>
-      {/* <ListGroup
-        items={items}
-        heading="Cities"
-        onSelecteItem={handelSelectItem}
-      /> */}
-      <Alert>
-        Hellow <span>World!</span>
-      </Alert>
+      <Button handleClick={() => console.log('Clicked')}>
+        My Button
+      </Button>
     </div>
   );
 };
