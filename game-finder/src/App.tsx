@@ -16,7 +16,7 @@ const App = () => {
         Alert
       </Button>
 
-      <Like />
+      <Like heartClick={() => console.log('Clicked')}/>
     </div>
   );
 };
