@@ -1,6 +1,8 @@
 const ListGroup = () => {
   const itemList = ["item1", "item2", "item3", "item4"];
 
+  const handleClick = (item: string, index: number) => console.log(item, index);
+
   return (
     <>
       <h1>Lists</h1>
@@ -8,8 +10,12 @@ const ListGroup = () => {
         <p>No Items</p>
       ) : (
         <ul className="list-group">
-          {itemList.map((item) => (
-            <li key={item} className="list-group-item">
+          {itemList.map((item, index) => (
+            <li
+              key={item}
+              className="list-group-item"
+              onClick={() => handleClick(item, index)}
+            >
               {item}
             </li>
           ))}
