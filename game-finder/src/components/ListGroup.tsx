@@ -1,12 +1,14 @@
 const ListGroup = () => {
+  const itemList = ["item1", "item2", "item3", "item4"];
+
   return (
     <ul className="list-group">
-      <li className="list-group-item">Item 1</li>
-      <li className="list-group-item">Item 2</li>
-      <li className="list-group-item">Item 3</li>
-      <li className="list-group-item">Item 4</li>
+      {itemList.map((item) => (
+        <li key={item} className="list-group-item">{item}</li>
+      ))}
     </ul>
   );
 };
 
 export default ListGroup;
+
