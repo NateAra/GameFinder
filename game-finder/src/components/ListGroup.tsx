@@ -11,7 +11,7 @@ const ListGroup = ( { items, heading } : ListGroupProps) => {
 
   return (
     <>
-      {heading}
+      <h1>{heading}</h1>
       {items.length === 0 ? (
         <p>No Items</p>
       ) : (
