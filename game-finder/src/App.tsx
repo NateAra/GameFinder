@@ -1,12 +1,16 @@
-import Alert from "./components/Alert";
+import Button from "./components/Button";
 
 const App = () => {
 
+  const handleOnClick = () => {
+
+  }
+
   return (
     <div>
-      <Alert>
-        Hello <span>World!</span>
-      </Alert>
+      <Button onClick={handleOnClick}>
+        My Button
+      </Button>
     </div>
   );
 };
