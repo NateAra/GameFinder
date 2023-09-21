@@ -8,7 +8,7 @@ const App = () => {
 
   return (
     <div>
-      <Button onClick={handleOnClick}>
+      <Button onClick={handleOnClick} color="">
         My Button
       </Button>
     </div>
