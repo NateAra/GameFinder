@@ -1,16 +1,25 @@
-import Button from "./components/Button";
+import { useState } from "react";
+import Alert from "./components/Alert";
 
 const App = () => {
+  const [showAlert, setShowAlert] = useState(false);
 
-  const handleOnClick = () => {
+  const handleClose = () => {
+    setShowAlert(false);
+  };
 
-  }
+  const handleOpen = () => {
+    setShowAlert(true);
+  };
 
   return (
     <div>
-      <Button onClick={handleOnClick} color="">
-        My Button
-      </Button>
+      {!showAlert && (
+        <button className="btn btn-primary" onClick={handleOpen}>
+          Open Alert
+        </button>
+      )}
+      {showAlert && <Alert onClose={handleClose}></Alert>}
     </div>
   );
 };
