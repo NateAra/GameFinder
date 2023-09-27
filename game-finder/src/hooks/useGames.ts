@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { CanceledError } from "axios";
 import { useEffect, useState } from "react";
 
 interface Game {
@@ -23,8 +23,10 @@ const useGames = () => {
         signal: controller.signal,
       })
       .then((response) => setGames(response.data.results))
-      .catch((error) => setError(error.message));
-
+      .catch((error) => {
+        if (error instanceof CanceledError) return;
+        setError(error.message);
+      });
     return () => controller.abort();
   }, []);
 
