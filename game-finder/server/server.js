@@ -23,13 +23,11 @@ app.get("/", async (req, res) => {
   } catch (error) {
     console.error("Error fetching data from RAWG API: ", error.message);
 
-    // Log the detailed error information for debugging purposes
     if (error.response) {
       console.error("Response data:", error.response.data);
       console.error("Response status:", error.response.status);
     }
 
-    // Send a generic error message to the client
     res
       .status(500)
       .json({ error: "Failed to fetch data from the external API" });
