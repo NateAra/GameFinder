@@ -17,10 +17,14 @@ const useGames = () => {
     const [error, setError] = useState("");
   
     useEffect(() => {
+        const controller = new AbortController();
+
       axios
-        .get<FetchGamesResponse>("http://localhost:3001")
+        .get<FetchGamesResponse>("http://localhost:3001", {signal: controller.signal})
         .then((response) => setGames(response.data.results))
         .catch((error) => setError(error.message));
+
+        return () => controller.abort();
     }, []);
 
   return (
