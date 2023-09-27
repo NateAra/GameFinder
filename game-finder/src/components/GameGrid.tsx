@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Text } from "@chakra-ui/react";
 
 interface Game {
   id: number;
@@ -17,17 +18,21 @@ const GameGrid = () => {
 
   useEffect(() => {
     axios
-      .get<GamesResponse>("http://localhost:3001/")
+      .get<GamesResponse>("http://localhost:3001")
       .then((response) => setGames(response.data.results))
       .catch((error) => setError(error.message));
   }, []);
 
   return (
+    <>
+    {error && <Text> {error} </Text> }
     <ul>
+      
       {games.map((game) => (
         <li key={game.id}> {game.name} </li>
       ))}
     </ul>
+    </>
   );
 };
 
