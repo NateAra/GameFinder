@@ -19,20 +19,31 @@ app.get("/", async (req, res) => {
     const response = await axios.get(
       `https://api.rawg.io/api/games?key=${process.env.REACT_APP_API_KEY}`
     );
-    res.json(response.data);
+    
+    // Sanitize the response data before sending it to the client
+    const sanitizedData = sanitizeResponseData(response.data);
+    
+    res.json(sanitizedData);
   } catch (error) {
-    console.error("Error fetching data from RAWG API: ", error.message);
-
-    if (error.response) {
-      console.error("Response data:", error.response.data);
-      console.error("Response status:", error.response.status);
-    }
-
-    res
-      .status(500)
-      .json({ error: "Failed to fetch data from the external API" });
+    // Handle error
+    res.status(500).json({ error: "Failed to fetch data from the external API" });
   }
 });
+
+function sanitizeResponseData(data) {
+  // Remove sensitive information from the response data
+  if (data.next) {
+    data.next = sanitizeUrl(data.next);
+  }
+  // Perform other sanitization as needed
+  return data;
+}
+
+function sanitizeUrl(url) {
+  // Remove the API key from the URL
+  return url.replace(/key=[^&]*&?/, "");
+}
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
