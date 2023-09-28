@@ -5,8 +5,11 @@ interface CriteProp {
 }
 
 const CriticScore = ({ score }: CriteProp) => {
+
+  let color = score > 75 ? 'green' : score > 60 ? 'yellow' : ''; 
+
   return (
-    <Badge>
+    <Badge colorScheme={color} fontSize="14px" paddingX={2} borderRadius='5px'>
         {score}
     </Badge>
   )
