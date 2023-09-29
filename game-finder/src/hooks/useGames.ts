@@ -30,7 +30,7 @@ const useGames = () => {
     setLoading(true);
 
     axios
-      .get<FetchGamesResponse>("http://localhost:3001", {
+      .get<FetchGamesResponse>("http://localhost:3001/games", {
         signal: controller.signal,
       })
       .then((response) => {
