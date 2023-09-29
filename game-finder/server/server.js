@@ -14,10 +14,16 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", async (req, res) => {
+app.get("/:type", async (req, res) => {
   try {
+    const type = req.params.type;
+
+    if (type !== "games" && type !== "genres") {
+      return res.status(400).json({ error: "Invalid type parameter" });
+    }
+
     const response = await axios.get(
-      `https://api.rawg.io/api/games?key=${process.env.REACT_APP_API_KEY}`
+      `https://api.rawg.io/api/${type}?key=${process.env.REACT_APP_API_KEY}`
     );
     
     // Sanitize the response data before sending it to the client
