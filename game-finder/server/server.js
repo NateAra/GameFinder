@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 });
 
 const cache = {};
-const cacheTTL = 60 * 60 * 1000; // 1 hour, Time to live
+const cacheTTL = 60 * 60 * 1000;
 
 app.get("/:type", async (req, res) => {
   try {
