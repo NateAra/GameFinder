@@ -14,12 +14,21 @@ app.use((req, res, next) => {
   next();
 });
 
+const cache = {};
+const cacheTTL = 60 * 60 * 1000; // 1 hour, Time to live
+
 app.get("/:type", async (req, res) => {
   try {
     const type = req.params.type;
 
     if (type !== "games" && type !== "genres") {
       return res.status(400).json({ error: "Invalid type parameter" });
+    }
+
+    const now = Date.now();
+    
+    if (cache[type] && (now - cache[type].timestamp < cacheTTL)) {
+      return res.json(cache[type].data);
     }
 
     const response = await axios.get(
@@ -29,7 +38,13 @@ app.get("/:type", async (req, res) => {
     // Sanitize the response data before sending it to the client
     const sanitizedData = sanitizeResponseData(response.data);
     
+    cache[type] = {
+      data: sanitizedData,
+      timestamp: now
+    };
+    
     res.json(sanitizedData);
+
   } catch (error) {
     // Handle error
     res.status(500).json({ error: "Failed to fetch data from the external API" });
