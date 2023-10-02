@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 });
 
 const cache = {};
-const cacheTTL = 60 * 60 * 1000;  // 1 hour
+const cacheTTL = 60 * 60 * 1000;
 
 app.get("/*", async (req, res) => {
   try {
@@ -30,8 +30,8 @@ app.get("/*", async (req, res) => {
     }
 
     const type_mappings = {
-      "games": "games",
-      "genres": "genres",
+      games: "games",
+      genres: "genres",
       "platforms/lists/parents": "platforms/lists/parents",
     };
 
@@ -57,7 +57,9 @@ app.get("/*", async (req, res) => {
 
     res.json(sanitizedData);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch data from the external API" });
+    res
+      .status(500)
+      .json({ error: "Failed to fetch data from the external API" });
   }
 });
 
