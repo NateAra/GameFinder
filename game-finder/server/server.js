@@ -15,33 +15,39 @@ app.use((req, res, next) => {
 });
 
 const cache = {};
-const cacheTTL = 60 * 60 * 1000;
+const cacheTTL = 60 * 60 * 1000;  // 1 hour
 
-app.get("/:type", async (req, res) => {
+app.get("/*", async (req, res) => {
   try {
-    const type = req.params.type;
+    const type = req.params[0];
     const genre = req.query.genres;
 
-    if (type !== "games" && type !== "genres") {
-      return res.status(400).json({ error: "Invalid type parameter" });
-    }
-
     const now = Date.now();
-    const cacheKey = genre ? `${type}_${genre}` : type; // Make cache key dependent on genre if it exists
+    const cacheKey = genre ? `${type}_${genre}` : type;
 
     if (cache[cacheKey] && now - cache[cacheKey].timestamp < cacheTTL) {
       return res.json(cache[cacheKey].data);
     }
 
-    let url = `https://api.rawg.io/api/${type}?key=${process.env.REACT_APP_API_KEY}`;
+    const type_mappings = {
+      "games": "games",
+      "genres": "genres",
+      "platforms/lists/parents": "platforms/lists/parents",
+    };
+
+    const api_path = type_mappings[type];
+    if (!api_path) {
+      return res.status(400).json({ error: "Invalid type parameter" });
+    }
+
+    let url = `https://api.rawg.io/api/${api_path}?key=${process.env.REACT_APP_API_KEY}`;
 
     if (type === "games" && genre) {
-      url += `&genres=${genre}`; // Append genre parameter to the URL if type is games and genre is present
+      url += `&genres=${genre}`;
     }
 
     const response = await axios.get(url);
 
-    // Sanitize the response data before sending it to the client
     const sanitizedData = sanitizeResponseData(response.data);
 
     cache[cacheKey] = {
@@ -51,14 +57,11 @@ app.get("/:type", async (req, res) => {
 
     res.json(sanitizedData);
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Failed to fetch data from the external API" });
+    res.status(500).json({ error: "Failed to fetch data from the external API" });
   }
 });
 
 function sanitizeResponseData(data) {
-  // Remove sensitive information from the response data
   if (data.next) {
     data.next = sanitizeUrl(data.next);
   }
@@ -66,7 +69,6 @@ function sanitizeResponseData(data) {
 }
 
 function sanitizeUrl(url) {
-  // Remove the API key from the URL
   return url.replace(/key=[^&]*&?/, "");
 }
 
