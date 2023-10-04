@@ -14,10 +14,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const cache = {};
-const cacheTTL = 60 * 60 * 1000;
-
-app.get("/*", async (req, res) => {
+app.get("/games", async (req, res) => {
   try {
     const type = req.params[0];
     const genre = req.query.genres;
@@ -63,16 +60,26 @@ app.get("/*", async (req, res) => {
   }
 });
 
-function sanitizeResponseData(data) {
-  if (data.next) {
-    data.next = sanitizeUrl(data.next);
+app.get("/genres", async (req, res) => {
+  try {
+    const url = `https://api.rawg.io/api/genres?key=${process.env.REACT_APP_API_KEY}`;
+    const response = await axios.get(url);
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch genres data" });
   }
   return data;
 }
 
-function sanitizeUrl(url) {
-  return url.replace(/key=[^&]*&?/, "");
-}
+app.get("/platforms/lists/parents", async (req, res) => {
+  try {
+    const url = `https://api.rawg.io/api/platforms/lists/parents?key=${process.env.REACT_APP_API_KEY}`;
+    const response = await axios.get(url);
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch parent platforms data" });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
