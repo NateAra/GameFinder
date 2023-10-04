@@ -18,9 +18,7 @@ app.get("/games", async (req, res) => {
   try {
     const type = req.params[0];
     const genre = req.query.genres;
-
-    const now = Date.now();
-    const cacheKey = genre ? `${type}_${genre}` : type;
+    const platform = req.query.platforms;
 
     if (cache[cacheKey] && now - cache[cacheKey].timestamp < cacheTTL) {
       return res.json(cache[cacheKey].data);
@@ -42,6 +40,9 @@ app.get("/games", async (req, res) => {
     if (type === "games" && genre) {
       url += `&genres=${genre}`;
     }
+    if (platform) {
+      url += `&platforms=${platform}`;
+    }
 
     const response = await axios.get(url);
 
@@ -54,9 +55,7 @@ app.get("/games", async (req, res) => {
 
     res.json(sanitizedData);
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Failed to fetch data from the external API" });
+    res.status(500).json({ error: "Failed to fetch games data" });
   }
 });
 
@@ -68,8 +67,17 @@ app.get("/genres", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch genres data" });
   }
-  return data;
-}
+});
+
+app.get("/platforms", async (req, res) => {
+  try {
+    const url = `https://api.rawg.io/api/platforms?key=${process.env.REACT_APP_API_KEY}`;
+    const response = await axios.get(url);
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch platforms data" });
+  }
+});
 
 app.get("/platforms/lists/parents", async (req, res) => {
   try {
