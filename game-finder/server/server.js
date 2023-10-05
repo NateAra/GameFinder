@@ -18,6 +18,8 @@ app.get("/games", async (req, res) => {
   try {
     const genre = req.query.genres;
     const platform = req.query.platforms;
+    const sortOrder = req.query.ordering;
+
 
     let url = `https://api.rawg.io/api/games?key=${process.env.REACT_APP_API_KEY}`;
     if (genre) {
@@ -25,6 +27,9 @@ app.get("/games", async (req, res) => {
     }
     if (platform) {
       url += `&platforms=${platform}`;
+    }
+    if (sortOrder) {
+      url += `&ordering=${sortOrder}`;
     }
 
     const response = await axios.get(url);
