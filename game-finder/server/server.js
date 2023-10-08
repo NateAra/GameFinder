@@ -32,7 +32,7 @@ app.get("/games", async (req, res) => {
       url += `&ordering=${sortOrder}`;
     }
     if (searchs) {
-      url += `&search=${searchs}`
+      url += `&search=${searchs}`;
     }
 
     const response = await axios.get(url);
