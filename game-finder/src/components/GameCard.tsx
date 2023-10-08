@@ -20,6 +20,7 @@ const GameCard = ({ game }: GameProp) => {
           />
           <CriticScore score={game.metacritic} />
         </HStack>
+        <Heading fontSize="2xl">{game.name}</Heading>
       </CardBody>
     </Card>
   );
