@@ -43,6 +43,8 @@ const GenreList = ({ selectedGenre, onSelectectGenre }: GenreListProps) => {
         </ListItem>
       ))}
     </List>
+                whiteSpace={"normal"}
+                textAlign={"left"}
   );
 };
 
