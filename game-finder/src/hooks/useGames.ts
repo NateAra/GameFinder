@@ -17,7 +17,7 @@ export interface Game {
 
 const useGames = (gameQuery: GameQuery) =>
   useData<Game>(
-    "http://localhost:3001/games",
+    "https://game-api-alpha.vercel.app/games",
     {
       params: {
         genres: gameQuery.genre?.id,
