@@ -16,64 +16,57 @@ app.use((req, res, next) => {
 
 app.get("/games", async (req, res) => {
   try {
-    const genre = req.query.genres;
-    const platform = req.query.platforms;
-    const sortOrder = req.query.ordering;
-    const searchs = req.query.search;
+    const { genres, platforms, ordering, search } = req.query;
 
-    let url = `https://api.rawg.io/api/games?key=${process.env.REACT_APP_API_KEY}`;
-    if (genre) {
-      url += `&genres=${genre}`;
+    const sanitizedGenres = sanitizeInput(genres);
+    const sanitizedPlatforms = sanitizeInput(platforms);
+    const sanitizedOrdering = sanitizeInput(ordering);
+    const sanitizedSearch = sanitizeInput(search);
+
+    let url = `https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}`;
+    if (sanitizedGenres) {
+      url += `&genres=${sanitizedGenres}`;
     }
-    if (platform) {
-      url += `&platforms=${platform}`;
+    if (sanitizedPlatforms) {
+      url += `&platforms=${sanitizedPlatforms}`;
     }
-    if (sortOrder) {
-      url += `&ordering=${sortOrder}`;
+    if (sanitizedOrdering) {
+      url += `&ordering=${sanitizedOrdering}`;
     }
-    if (searchs) {
-      url += `&search=${searchs}`;
+    if (sanitizedSearch) {
+      url += `&search=${sanitizedSearch}`;
     }
 
     const response = await axios.get(url);
-    res.json(response.data);
+    const sanitizedResponse = sanitizeResponseData(response.data)
+    res.status(200).json(sanitizedResponse);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch games data" });
   }
 });
 
-// app.get("/genres", async (req, res) => {
-//   try {
-//     const url = `https://api.rawg.io/api/genres?key=${process.env.REACT_APP_API_KEY}`;
-//     const response = await axios.get(url);
-//     res.json(response.data);
-//   } catch (error) {
-//     res.status(500).json({ error: "Failed to fetch genres data" });
-//   }
-// });
+function sanitizeInput(input) {
+  const sanitized = input ? input.replace(/[^a-zA-Z0-9_-]/g, "") : null;
+  return sanitized;
+}
 
-// app.get("/platforms", async (req, res) => {
-//   try {
-//     const url = `https://api.rawg.io/api/platforms?key=${process.env.REACT_APP_API_KEY}`;
-//     const response = await axios.get(url);
-//     res.json(response.data);
-//   } catch (error) {
-//     res.status(500).json({ error: "Failed to fetch platforms data" });
-//   }
-// });
+function sanitizeResponseData(data) {
+  if (data.next) {
+    data.next = sanitizeUrl(data.next);
+  }
+  return data;
+}
 
-// app.get("/platforms/lists/parents", async (req, res) => {
-//   try {
-//     const url = `https://api.rawg.io/api/platforms/lists/parents?key=${process.env.REACT_APP_API_KEY}`;
-//     const response = await axios.get(url);
-//     res.json(response.data);
-//   } catch (error) {
-//     res.status(500).json({ error: "Failed to fetch parent platforms data" });
-//   }
-// });
+function sanitizeUrl(url) {
+  return url.replace(/key=[^&]*&?/, "");
+}
 
 app.listen(PORT, () => {
   console.log(`API is listening on Port ${PORT}`);
 });
 
-module.exports = app
+app.get('/', (req, res) => {
+  res.send('Hey this is my API running 🥳')
+})
+
+module.exports = app;
