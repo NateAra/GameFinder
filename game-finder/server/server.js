@@ -42,36 +42,38 @@ app.get("/games", async (req, res) => {
   }
 });
 
-app.get("/genres", async (req, res) => {
-  try {
-    const url = `https://api.rawg.io/api/genres?key=${process.env.REACT_APP_API_KEY}`;
-    const response = await axios.get(url);
-    res.json(response.data);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to fetch genres data" });
-  }
-});
+// app.get("/genres", async (req, res) => {
+//   try {
+//     const url = `https://api.rawg.io/api/genres?key=${process.env.REACT_APP_API_KEY}`;
+//     const response = await axios.get(url);
+//     res.json(response.data);
+//   } catch (error) {
+//     res.status(500).json({ error: "Failed to fetch genres data" });
+//   }
+// });
 
-app.get("/platforms", async (req, res) => {
-  try {
-    const url = `https://api.rawg.io/api/platforms?key=${process.env.REACT_APP_API_KEY}`;
-    const response = await axios.get(url);
-    res.json(response.data);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to fetch platforms data" });
-  }
-});
+// app.get("/platforms", async (req, res) => {
+//   try {
+//     const url = `https://api.rawg.io/api/platforms?key=${process.env.REACT_APP_API_KEY}`;
+//     const response = await axios.get(url);
+//     res.json(response.data);
+//   } catch (error) {
+//     res.status(500).json({ error: "Failed to fetch platforms data" });
+//   }
+// });
 
-app.get("/platforms/lists/parents", async (req, res) => {
-  try {
-    const url = `https://api.rawg.io/api/platforms/lists/parents?key=${process.env.REACT_APP_API_KEY}`;
-    const response = await axios.get(url);
-    res.json(response.data);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to fetch parent platforms data" });
-  }
-});
+// app.get("/platforms/lists/parents", async (req, res) => {
+//   try {
+//     const url = `https://api.rawg.io/api/platforms/lists/parents?key=${process.env.REACT_APP_API_KEY}`;
+//     const response = await axios.get(url);
+//     res.json(response.data);
+//   } catch (error) {
+//     res.status(500).json({ error: "Failed to fetch parent platforms data" });
+//   }
+// });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`API is listening on Port ${PORT}`);
 });
+
+module.exports = app
