@@ -7,6 +7,9 @@ export interface Platform {
   slug: string;
 }
 
+const baseUrl = "https://game-api-alpha.vercel.app/games";
+
+// const baseUrl = "http://localhost:3001/games";
 export interface Game {
   id: number;
   name: string;
@@ -17,7 +20,7 @@ export interface Game {
 
 const useGames = (gameQuery: GameQuery) =>
   useData<Game>(
-    "https://game-api-alpha.vercel.app/games",
+    baseUrl,
     {
       params: {
         genres: gameQuery.genre?.id,
