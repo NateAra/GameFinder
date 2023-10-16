@@ -9,7 +9,6 @@ export interface Platform {
 
 const baseUrl = "https://game-api-alpha.vercel.app/games";
 
-// const baseUrl = "http://localhost:3001/games";
 export interface Game {
   id: number;
   name: string;
