@@ -1,4 +1,4 @@
-# GameFinder 🎮
+# [GameFinder](https://game-finder-weld.vercel.app/) 🎮  
 
 Welcome to GameFinder - your ultimate destination for discovering new video games tailored to your preferences and interests. Whether you're a casual gamer looking for a fun way to spend an evening or a hardcore enthusiast in search of your next obsession, GameFinder is here to guide you.
 
